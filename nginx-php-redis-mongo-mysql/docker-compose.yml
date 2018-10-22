@@ -24,7 +24,7 @@ services:
     redis:
         image: weihoop/redis:latest
         ports:
-            - "6389:6389"
+            - "6379:6379"
         volumes:
             - ./dbs/redis/:/data
         networks:
