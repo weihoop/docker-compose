@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+    web:
+        image: weihoop/nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - ./code:/data/www
+            - ./logs/nginx:/var/log/nginx
+            - ./conf/site.conf:/etc/nginx/conf.d/default.conf
+            - ./conf/nginx.conf:/etc/nginx/nginx.conf
+        networks:
+            - code-network
+    php:
+        image: weihoop/php-fpm:latest
+        volumes:
+            - ./code:/data/www
+            - ./logs/php-fpm:/var/log/php-fpm
+            - ./conf/www.conf:/etc/php-fpm.d/www.conf
+            - ./conf/php-fpm.conf:/etc/php-fpm.conf
+        networks:
+            - code-network
+
+networks:
+    code-network:
+        driver: bridge
