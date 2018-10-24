@@ -12,6 +12,10 @@ services:
             - ./conf/nginx.conf:/etc/nginx/nginx.conf
         networks:
             - lnmpr-network
+        depends_on:
+            - php
+            - redis
+            - mysql
     php:
         image: weihoop/php-fpm:latest
         volumes:
@@ -26,7 +30,8 @@ services:
         ports:
             - "6379:6379"
         volumes:
-            - ./dbs/redis/:/data
+            - ./dbs/redis:/data
+            - ./logs/redis:/var/log/redis
         networks:
             - lnmpr-network 
     mysql:
